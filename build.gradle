@@ -32,5 +32,6 @@ dependencies {
     // gradle 버전이 7.0 이상부터는 compile, testCompile 등이 삭제되어 4.10.2 버전으로 다운그레이드 함
     compile('org.springframework.boot:spring-boot-starter-web')
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile('org.projectlombok:lombok')
 }
 
