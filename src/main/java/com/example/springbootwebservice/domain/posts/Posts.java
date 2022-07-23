@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor // 기본 생성자 자동 추가 ( = public posts() {} )
 @Entity // 테이블과 연결될 클래스임을 명시하는 어노테이션
-public class Posts {
+public class Posts extends BasicTimeEntity{
 
     @Id // 해당 테이블의 pk
     @GeneratedValue(strategy = GenerationType.IDENTITY) // pk의 생성 규칙 설정 / 스프링부트 2.0에서는 해당 옵션으로 설정해야 auto_increment 됨

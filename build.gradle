@@ -38,5 +38,7 @@ dependencies {
     // 인메모리 관계형 DB로 별도의 설치 필요없의 의존성만으로 관리 가능
     // 메모리에서 실행되기 때문에 어플리케이션을 재시작 할 때 마다 초기화 된다는 점을 이용하여 테스트 용도로 많이 사용함
     compile('com.h2database:h2')
+    // 스프링 부트에서 공식 지원하는 템플릿 엔진
+    compile('org.springframework.boot:spring-boot-starter-mustache')
 }
 
