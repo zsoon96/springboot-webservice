@@ -2,12 +2,16 @@ package com.example.springbootwebservice.service.posts;
 
 import com.example.springbootwebservice.domain.posts.Posts;
 import com.example.springbootwebservice.domain.posts.PostsRepository;
+import com.example.springbootwebservice.web.dto.PostsListResponseDto;
 import com.example.springbootwebservice.web.dto.PostsResponseDto;
 import com.example.springbootwebservice.web.dto.PostsSaveRequestDto;
 import com.example.springbootwebservice.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 // 서비스단은 비즈니스 로직을 처리하는 곳이 아닌 트랜잭션 / 도메인 간 순서 보장의 역할만 함!!!
@@ -43,6 +47,12 @@ public class PostsService {
         );
 
         return new PostsResponseDto(post);
+    }
+
+    @Transactional(readOnly = true) // 트랜잭션 범위는 유지하되, 조회 기능만 남겨주어 조회 속도가 개선 > 등록/수정/삭제 기능이 없는 서비스 메소드에서 사용하는 것 추천
+    public List<PostsListResponseDto> showList () {
+        // 레포지토리 결과로 넘어온 Posts의 steam을 map을 통해 PostsListRes로 변환 후 List로 반환
+        return postsRepository.findAllDesc().stream().map(PostsListResponseDto::new).collect(Collectors.toList());
     }
 
 }
