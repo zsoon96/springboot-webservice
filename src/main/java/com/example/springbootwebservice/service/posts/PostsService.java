@@ -55,4 +55,13 @@ public class PostsService {
         return postsRepository.findAllDesc().stream().map(PostsListResponseDto::new).collect(Collectors.toList());
     }
 
+    @Transactional
+    public void delete (Long id) {
+        Posts post = postsRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("해당 게시글이 없습니다. id= " + id)
+        );
+
+        postsRepository.delete(post);
+    }
+
 }
