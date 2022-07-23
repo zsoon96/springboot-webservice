@@ -99,4 +99,31 @@ public class PostsApiControllerTest {
         assertThat(postList.get(0).getContent()).isEqualTo(expectedContent);
 
     }
+
+    @Test
+    public void Posts_삭제() {
+        // given
+        Posts post = postsRepository.save(Posts.builder()
+                .title("제목")
+                .content("내용")
+                .author("지순")
+                .build());
+
+        Long deleteId = post.getId();
+
+        String url = "http://localhost:" + port + "/api/v1/posts/" + deleteId;
+
+        HttpEntity<Posts> savedEntity = new HttpEntity<>(post);
+
+        // when
+        ResponseEntity<Long> responseEntity = testRestTemplate.exchange(url, HttpMethod.DELETE, savedEntity, Long.class);
+
+        // then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).isGreaterThan(0L);
+
+        List<Posts> result = postsRepository.findAll();
+//        assertThat(result.size()).isEqualTo(0); // 방법 1
+        assertThat(result).isEmpty(); // 방법 2
+    }
 }
