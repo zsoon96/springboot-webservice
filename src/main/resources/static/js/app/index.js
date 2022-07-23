@@ -6,6 +6,11 @@ var main = {
         $('#btn-save').on('click', function () {
             _this.save();
         });
+
+        // btn-update라는 id를 가진 html 엘리먼트에 click 이벤트가 발생할 때, update() 실행 되도록 등록
+        $('#btn-update').on('click', function () {
+            _this.update();
+        });
     },
 
     save : function () {
@@ -23,6 +28,29 @@ var main = {
             data: JSON.stringify(data)
         }).done(function () {
             alert("글이 등록되었습니다.");
+            window.location.href = "/";
+
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        });
+    },
+
+    update : function () { // 신규로 추가될 수정 기능
+        var data = {
+            title : $('#title').val(),
+            content : $('#content').val()
+        };
+
+        var id = $('#id').val();
+
+        $.ajax({
+            type: 'PUT',
+            url: '/api/v1/posts/' + id,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(data)
+        }).done(function () {
+            alert("글이 수정되었습니다.");
             window.location.href = "/";
 
         }).fail(function (error) {

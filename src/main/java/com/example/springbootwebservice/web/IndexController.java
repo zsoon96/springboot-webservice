@@ -32,6 +32,7 @@ public class IndexController {
     public String postsUpdate(@PathVariable Long id,
                               Model model) {
         PostsResponseDto dto = postsService.show(id);
+        // model.addAttribute( 머스테치 속성 이름(value)에, 전달할 데이터 )
         model.addAttribute("post", dto);
         return "posts-update";
     }
