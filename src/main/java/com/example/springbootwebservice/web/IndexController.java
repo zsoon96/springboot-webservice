@@ -1,5 +1,6 @@
 package com.example.springbootwebservice.web;
 
+import com.example.springbootwebservice.config.oauth.LoginUser;
 import com.example.springbootwebservice.config.oauth.dto.SessionUser;
 import com.example.springbootwebservice.service.posts.PostsService;
 import com.example.springbootwebservice.web.dto.PostsResponseDto;
@@ -20,12 +21,15 @@ public class IndexController {
     private final HttpSession httpSession;
 
     @GetMapping("/")
-    public String index (Model model) { // 서버 템플릿 엔진에서 사용할 수 있는 객체 저장  / 서비스에서 가져온 결과를 posts로 index.mustache에 전달
+    // 서버 템플릿 엔진에서 사용할 수 있는 객체 저장  / 서비스에서 가져온 결과를 posts로 index.mustache에 전달
+    // @LoginUser를 통해 세션정보 파라미터로 가져올 수 있음
+    public String index (Model model, @LoginUser SessionUser user) {
         model.addAttribute("posts", postsService.showList());
 
         // customOAuth2UserService에서 로그인 성공 시 세션에 session user를 저장하도록 구성
         // 즉 로그인 성공 시 httpSession.getAttribute("user")에서 값을 가져올 수 있음
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+        //SessionUser user = (SessionUser) httpSession.getAttribute("user");
+
         // user가 있으면 값을 담아서 index에 넘겨줌
         if ( user != null ) {
             model.addAttribute("userName", user.getName());
