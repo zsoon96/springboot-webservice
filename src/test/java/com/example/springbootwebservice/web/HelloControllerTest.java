@@ -1,9 +1,13 @@
 package com.example.springbootwebservice.web;
 
+import com.example.springbootwebservice.config.oauth.SecurityConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -14,13 +18,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @RunWith(SpringRunner.class) // JUnit에 내장된 실행자 외에 다른 실행자를 실행시킬 때 (SpringRunner)
-@WebMvcTest(controllers = HelloController.class) // Web(Spring MVC)에 집중할 수 있는 어노테이션 - @Controller, @ControllerAdvice 등 사용가능
+@WebMvcTest(controllers = HelloController.class, // Web(Spring MVC)에 집중할 수 있는 어노테이션 - @Controller, @ControllerAdvice 등 사용가능
+        excludeFilters = {
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)
+        }) // @WebMvcTest는 CustomOAuth2UserService을 스캔하지 않기에 SecurityConfig를 제거해주는 옵션
 public class HelloControllerTest {
 
         @Autowired // 빈 주입
         private MockMvc mvc; // 웹 API 테스트 시 사용
 
         @Test
+        @WithMockUser(roles="USER")
         public void hello리턴() throws Exception {
             String hello = "hello";
 
@@ -30,6 +38,7 @@ public class HelloControllerTest {
         }
 
         @Test
+        @WithMockUser(roles="USER")
         public void helloDto리턴() throws Exception {
             // given
             String name = "hello";

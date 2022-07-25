@@ -45,5 +45,7 @@ dependencies {
     // 데이터베이스를 세션 저장소로 사용하기 위해 필요한 의존성
     // 첫 로그인 후, 로그인 정보를 저장하는 곳
     compile('org.springframework.session:spring-session-jdbc')
+    // 스프링 시큐리티 테스트를 위한 여러 도구 지원
+    compile('org.springframework.security:spring-security-test')
 }
 
