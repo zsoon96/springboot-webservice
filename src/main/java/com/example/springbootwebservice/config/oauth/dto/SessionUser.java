@@ -3,8 +3,10 @@ package com.example.springbootwebservice.config.oauth.dto;
 import com.example.springbootwebservice.domain.posts.user.User;
 import lombok.Getter;
 
+import java.io.Serializable;
+
 @Getter
-public class SessionUser {
+public class SessionUser implements Serializable {
     // 인증된 사용자 정보만 필요
     private String name;
     private String email;
