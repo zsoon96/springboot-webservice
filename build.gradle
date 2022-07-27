@@ -47,5 +47,7 @@ dependencies {
     compile('org.springframework.session:spring-session-jdbc')
     // 스프링 시큐리티 테스트를 위한 여러 도구 지원
     compile('org.springframework.security:spring-security-test')
+    // MariaDB
+    compile('org.mariadb.jdbc:mariadb-java-client')
 }
 
